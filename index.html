@@ -669,6 +669,7 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     
     <footer>
         <div class="footer-content">
@@ -787,59 +788,79 @@
             }
             
             // Connect wallet button functionality
+// Replace the existing connectButton event listener with this:
+
             connectButton.addEventListener('click', async function() {
-                if (window.ethereum || window.solana) {
-                    try {
-                        // Simulate wallet connection
-                        connectButton.disabled = true;
-                        connectButton.innerHTML = `
-                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                            Connecting...
-                        `;
-                        
-                        await new Promise(resolve => setTimeout(resolve, 1500));
-                        
-                        // Simulate successful connection
-                        connectButton.innerHTML = `
-                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            Connected: 0x7f...3a4b
-                        `;
-                        connectButton.style.backgroundColor = 'var(--success)';
-                    } catch (err) {
-                        console.error('Connection error:', err);
-                        connectButton.innerHTML = `
-                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                            </svg>
-                            Error Connecting
-                        `;
-                        connectButton.style.backgroundColor = 'var(--error)';
-                        setTimeout(() => {
-                            connectButton.innerHTML = `
-                                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
-                                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-4"></path>
-                                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
-                                </svg>
-                                Connect Wallet
-                            `;
-                            connectButton.style.backgroundColor = 'var(--primary)';
-                            connectButton.disabled = false;
-                        }, 2000);
+                try {
+                    // Check if Phantom is installed
+                    if (!window.solana || !window.solana.isPhantom) {
+                        alert('Phantom Wallet not detected. Please install it from https://phantom.app/');
+                        window.open('https://phantom.app/', '_blank');
+                        return;
                     }
-                } else {
-                    alert('No crypto wallet detected. Please install MetaMask or Phantom Wallet.');
-                    window.open('https://phantom.app/', '_blank');
+
+                    // Show connecting state
+                    connectButton.disabled = true;
+                    connectButton.innerHTML = `
+                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Connecting...
+                    `;
+
+                    // Actual Phantom connection
+                    const response = await window.solana.connect();
+                    const publicKey = response.publicKey.toString();
+                    const shortenedKey = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
+
+                    // After successful connection, you can use:
+                    const transaction = new solanaWeb3.Transaction().add(
+                        // Your instructions here
+                    );
+
+                    const { signature } = await window.solana.signAndSendTransaction(transaction);
+
+                    // Update UI on successful connection
+                    connectButton.innerHTML = `
+                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        Connected: ${shortenedKey}
+                    `;
+                    connectButton.style.backgroundColor = 'var(--success)';
+                    
+                    // Store the connection for future use
+                    window.phantomConnection = response;
+
+                } catch (err) {
+                    console.error('Connection error:', err);
+                    connectButton.innerHTML = `
+                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        Connection Failed
+                    `;
+                    connectButton.style.backgroundColor = 'var(--error)';
+                    
+                    // Reset button after delay
+                    setTimeout(() => {
+                        connectButton.innerHTML = `
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                                <path d="M3 5v14a2 2 0 0 0 2 2h16v-4"></path>
+                                <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                            </svg>
+                            Connect Wallet
+                        `;
+                        connectButton.style.backgroundColor = 'var(--primary)';
+                        connectButton.disabled = false;
+                    }, 3000);
                 }
             });
-        });
+
     </script>
 </body>
 </html>
