@@ -79,7 +79,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-weight: bold; */
+            font-weight: bold; 
         }
         
         nav {
@@ -669,7 +669,7 @@
             </div>
         </div>
     </div>
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+
     
     <footer>
         <div class="footer-content">
@@ -704,6 +704,7 @@
         
         <p class="copyright">© 2025 Shits Experiment. All rights reserved.</p>
     </footer>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -802,23 +803,14 @@
                     // Show connecting state
                     connectButton.disabled = true;
                     connectButton.innerHTML = `
-                        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Connecting...
                     `;
 
-                    // Actual Phantom connection
+                    // Connect to Phantom
                     const response = await window.solana.connect();
                     const publicKey = response.publicKey.toString();
                     const shortenedKey = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
-
-                    // After successful connection, you can use:
-                    const transaction = new solanaWeb3.Transaction().add(
-                        // Your instructions here
-                    );
-
-                    const { signature } = await window.solana.signAndSendTransaction(transaction);
 
                     // Update UI on successful connection
                     connectButton.innerHTML = `
@@ -830,18 +822,30 @@
                     `;
                     connectButton.style.backgroundColor = 'var(--success)';
                     
-                    // Store the connection for future use
-                    window.phantomConnection = response;
+                    // Add disconnect functionality
+                    connectButton.onclick = async function() {
+                        try {
+                            await window.solana.disconnect();
+                            location.reload(); // Refresh to reset state
+                        } catch (err) {
+                            console.error('Disconnect error:', err);
+                        }
+                    };
 
                 } catch (err) {
                     console.error('Connection error:', err);
+                    let errorMsg = 'Connection Failed';
+                    if (err.message.includes('User rejected')) {
+                        errorMsg = 'Connection Rejected';
+                    }
+                    
                     connectButton.innerHTML = `
                         <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="8" x2="12" y2="12"></line>
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
-                        Connection Failed
+                        ${errorMsg}
                     `;
                     connectButton.style.backgroundColor = 'var(--error)';
                     
@@ -857,10 +861,15 @@
                         `;
                         connectButton.style.backgroundColor = 'var(--primary)';
                         connectButton.disabled = false;
+                        connectButton.onclick = connectButton._originalOnClick; // Restore original handler
                     }, 3000);
                 }
             });
 
+            // Store original onclick handler
+            connectButton._originalOnClick = connectButton.onclick;
+        });
     </script>
+
 </body>
 </html>
