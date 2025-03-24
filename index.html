@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIT | VISUAL REWARDS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-dark: #475569;
+            --border: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Bangers", system-ui;
+        }
+        
+        body {
+            background: url('bg.gif') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0); /* Dark overlay with transparency */
+            z-index: -1;
+        }
+        
+        header {
+            background-color: rgba(2, 6, 23, 0);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold; */
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--light);
+        }
+        
+        .nav-link.active {
+            color: var(--primary-light);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--gray);
+        }
+        
+        .btn-connect {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-connect:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .container {
+            background-color: rgba(15, 23, 42, 0); /* Slightly transparent dark background */
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin: 2rem auto;
+            padding: 3rem;
+        }
+        
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, var(--gray));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            background-color: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.1);
+        }
+        
+        .card-header {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--light);
+            font-size: 0.95rem;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background-color: rgba(2, 6, 23, 0.5);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            border-radius: 12px;
+            background-color: rgba(2, 6, 23, 0.5);
+            border: 1px dashed var(--border);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .placeholder-icon {
+            width: 60px;
+            height: 60px;
+            color: var(--gray-dark);
+            margin-bottom: 1.5rem;
+        }
+        
+        .placeholder-text {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .loading {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem 0;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result-image {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .token-info {
+            width: 100%;
+            margin-top: 2rem;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .token-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .token-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+        
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .token-item {
+            background-color: rgba(2, 6, 23, 0.7);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+        }
+        
+        .token-label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+        
+        .token-value {
+            font-weight: 500;
+            color: var(--light);
+            word-break: break-all;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background-color: rgba(2, 6, 23, 0);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--light);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            transition: all 0.2s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .social-icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .copyright {
+            color: var(--gray-dark);
+            font-size: 0.875rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        .token-logo-container {
+    width: 116px;
+    height: 116px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.token-logo {
+    width: 124px;
+    height: 124px;
+    object-fit: contain;
+}
+
+/* If you want the logo to update based on the token */
+.token-logo.dynamic {
+    transition: all 0.3s ease;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">
+            <img src="image__3_-removebg-preview.png" alt="Shits Experiment Logo" class="logo-img" onerror="this.src='placeholder.png';this.onerror='';" />
+            <span>Visual Rewards Experiment</span>
+        </a>
+        
+        <nav>
+            <a href="#" class="nav-link active">Visualizer</a>
+            <a href="#" class="nav-link">Gallery</a>
+            <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Docs</a>
+        </nav>
+        
+        <div class="header-actions">
+            <a href="https://pump.fun/profile/DzSNY64Jz9JsTvnpU83A79aokZKRwSvxzxT2RSKFYGzX" target="_blank">
+                <button class="btn btn-outline">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    BUY
+                </button>
+            </a>
+            <button class="btn btn-connect" id="connect-wallet-btn">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-4"></path>
+                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                </svg>
+                Connect Wallet
+            </button>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>AI-Powered Memecoin Visualizer</h1>
+            <p>Generate unique visual representations of any memecoin using advanced AI algorithms. Simply enter the contract address and let our platform create stunning visuals.</p>
+            <div>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <!-- Add this logo image container -->
+                        <div class="token-logo-container">
+                            <img src="image (3).png" alt="Token Logo" class="token-logo" id="token-logo" onerror="this.src='https://cryptologos.cc/logos/default-fallback-logo.png'">
+                        </div>
+                        <h2 class="card-title">Token Details</h2>
+                    </div>
+                    <span class="badge">Beta</span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="contract-address" class="input-label">Contract Address</label>
+                    <input type="text" id="contract-address" class="input-field" placeholder="ax3S..." />
+                </div>
+                
+                <div class="input-group">
+                    <label for="ticker" class="input-label">Ticker Symbol</label>
+                    <input type="text" id="ticker" class="input-field" placeholder="MELANIA, PEPE, DOGE" />
+                </div>
+                
+                <div class="input-group">
+                    <label for="network" class="input-label">Network</label>
+                    <select id="network" class="input-field">
+                        <option value="">Select Network</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="solana">Solana</option>
+                        <option value="bsc">Binance Smart Chain</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="arbitrum">Arbitrum</option>
+                    </select>
+                </div>
+                
+                <button id="generate-visualization-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-9-9 9 9 0 0 1 9-9 9 9 0 0 1 9 9z"></path>
+                        <path d="M18 12a6 6 0 0 1-6 6 6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6z"></path>
+                        <path d="M15 12a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3z"></path>
+                    </svg>
+                    Generate Visualization
+                </button>
+                
+                <button id="claim-rewards-btn" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;">
+                    <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 12v8H4v-8"></path>
+                        <path d="M18 6v6H6V6"></path>
+                        <path d="M12 18V6"></path>
+                        <path d="M12 6l4-4"></path>
+                        <path d="M12 6l-4-4"></path>
+                    </svg>
+                    Claim Rewards
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">AI Visualization</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-outline" style="padding: 0.5rem;">
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                                <line x1="4" y1="22" x2="4" y2="15"></line>
+                            </svg>
+                        </button>
+                        <button class="btn btn-outline" style="padding: 0.5rem;">
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="result-container">
+                    <svg class="placeholder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <p class="placeholder-text">Enter token details to generate an AI-powered visualization</p>
+                    
+                    <div class="loading" id="loading-spinner"></div>
+                    <img id="result-image" class="result-image" alt="Generated memecoin visualization" />
+                    
+                    <div class="token-info" id="token-info">
+                        <div class="token-info-header">
+                            <h3 class="token-title" id="token-name">Token Name</h3>
+                            <button class="btn btn-outline" style="padding: 0.375rem 0.75rem;">
+                                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                                    <line x1="4" y1="22" x2="4" y2="15"></line>
+                                </svg>
+                                Share
+                            </button>
+                        </div>
+                        
+                        <div class="token-grid">
+                            <div class="token-item">
+                                <div class="token-label">Contract Address</div>
+                                <div class="token-value" id="info-contract">-</div>
+                            </div>
+                            <div class="token-item">
+                                <div class="token-label">Symbol</div>
+                                <div class="token-value" id="info-symbol">-</div>
+                            </div>
+                            <div class="token-item">
+                                <div class="token-label">Network</div>
+                                <div class="token-value" id="info-network">-</div>
+                            </div>
+                            <div class="token-item">
+                                <div class="token-label">Generated</div>
+                                <div class="token-value" id="info-date">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Documentation</a>
+                <a href="#" class="footer-link">API</a>
+                <a href="#" class="footer-link">Pricing</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://x.com/visualrewards" class="social-link" target="_blank">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                </a>
+                <a href="https://t.me/visualrewards" class="social-link" target="_blank">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </a>
+                <a href="https://pump.fun/profile/DzSNY64Jz9JsTvnpU83A79aokZKRwSvxzxT2RSKFYGzX" class="social-link" target="_blank">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <p class="copyright">© 2025 Shits Experiment. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generate-visualization-btn');
+            const contractInput = document.getElementById('contract-address');
+            const tickerInput = document.getElementById('ticker');
+            const networkSelect = document.getElementById('network');
+            const resultImage = document.getElementById('result-image');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const tokenInfo = document.getElementById('token-info');
+            const tokenName = document.getElementById('token-name');
+            const infoContract = document.getElementById('info-contract');
+            const infoSymbol = document.getElementById('info-symbol');
+            const infoNetwork = document.getElementById('info-network');
+            const infoDate = document.getElementById('info-date');
+            const claimRewardsBtn = document.getElementById('claim-rewards-btn');
+            const connectButton = document.getElementById('connect-wallet-btn');
+            
+            // Generate visualization button functionality
+            generateBtn.addEventListener('click', function() {
+                const contractAddress = contractInput.value.trim();
+                const ticker = tickerInput.value.trim().toUpperCase();
+                const network = networkSelect.value;
+                
+                if (!contractAddress || !ticker || !network) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Show loading state
+                loadingSpinner.style.display = 'block';
+                resultImage.style.display = 'none';
+                tokenInfo.style.display = 'none';
+                
+                // Simulate AI generation (2-3 seconds)
+                setTimeout(() => {
+                    // Hide loading state
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Show result with random image based on ticker
+                    resultImage.src = getRandomImage(ticker);
+                    resultImage.style.display = 'block';
+                    
+                    // Show token info
+                    tokenName.textContent = `${ticker} Token`;
+                    infoContract.textContent = contractAddress.substring(0, 6) + '...' + contractAddress.substring(contractAddress.length - 4);
+                    infoSymbol.textContent = ticker;
+                    infoNetwork.textContent = network.charAt(0).toUpperCase() + network.slice(1);
+                    
+                    // Current date
+                    const now = new Date();
+                    infoDate.textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    // Fade in token info
+                    tokenInfo.style.display = 'block';
+                    
+                    // Add slight animation to card
+                    const card = resultImage.closest('.card');
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.borderColor = 'var(--primary)';
+                    
+                    setTimeout(() => {
+                        card.style.transform = '';
+                    }, 300);
+                }, 2000 + Math.random() * 1000);
+            });
+            
+            // Claim rewards button functionality
+            claimRewardsBtn.addEventListener('click', function() {
+                alert('Reward claiming feature will be available after token launch!');
+            });
+            
+            // Function to generate random image based on ticker
+            function getRandomImage(ticker) {
+                const images = [
+                    `https://source.unsplash.com/random/600x400/?crypto,${ticker}`,
+                    `https://source.unsplash.com/random/600x400/?meme,${ticker}`,
+                    `https://source.unsplash.com/random/600x400/?coin,${ticker}`,
+                    `https://source.unsplash.com/random/600x400/?abstract,${ticker}`
+                ];
+                return images[Math.floor(Math.random() * images.length)];
+            }
+            
+            // Connect wallet button functionality
+            connectButton.addEventListener('click', async function() {
+                if (window.ethereum || window.solana) {
+                    try {
+                        // Simulate wallet connection
+                        connectButton.disabled = true;
+                        connectButton.innerHTML = `
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            Connecting...
+                        `;
+                        
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                        
+                        // Simulate successful connection
+                        connectButton.innerHTML = `
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            Connected: 0x7f...3a4b
+                        `;
+                        connectButton.style.backgroundColor = 'var(--success)';
+                    } catch (err) {
+                        console.error('Connection error:', err);
+                        connectButton.innerHTML = `
+                            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            Error Connecting
+                        `;
+                        connectButton.style.backgroundColor = 'var(--error)';
+                        setTimeout(() => {
+                            connectButton.innerHTML = `
+                                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-4"></path>
+                                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+                                </svg>
+                                Connect Wallet
+                            `;
+                            connectButton.style.backgroundColor = 'var(--primary)';
+                            connectButton.disabled = false;
+                        }, 2000);
+                    }
+                } else {
+                    alert('No crypto wallet detected. Please install MetaMask or Phantom Wallet.');
+                    window.open('https://phantom.app/', '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
